@@ -5,26 +5,24 @@
       <div class="text-right">
         <button type="button" class="btn btn-primary">新增房間</button>
       </div>
-      <div class="row justify-content-end">
+      <div class="row">
         <div class="table-responsive col-8">
           <table class="table table-striped table-dark">
             <thead>
               <tr>
                 <th width="140">分類</th>
-                <th width="180">產品名稱</th>
-                <th width="140"></th>
-                <th width="180">額外服務</th>
+                <th width="250">產品名稱</th>
+                <th width="250">額外服務</th>
                 <th width="140">原價</th>
                 <th width="140">售價</th>
-                <th width="180">設施服務</th>
+                <th width="250">設施服務</th>
                 <th width="140">編輯</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(item) in products" :key=" item.id">
                 <th scope="row">{{item.category}}</th>
-                <td>{{item.title}}</td>
-                <td></td>
+                <td width="300">{{item.title}}</td>
                 <td></td>
                 <td>{{item.origin_price}}</td>
                 <td>{{item.price}}</td>
@@ -34,7 +32,7 @@
                     <span class="slider round"></span>
                   </label>
                 </td>
-                <td>
+                <td width="180">
                   <div class="btn-group">
                     <button
                       type="button"
@@ -65,7 +63,7 @@
       <!-- 分頁元件 -->
       <pagination class="justify-content-center" :pages="pagination" @update="getProducts"></pagination>
       <!-- 刪除元件 -->
-      <DelProducts :temp-product="tempProduct" @delete="getProducts"></DelProducts>
+      <delProducts :temp-product="tempProduct" @delete="getProducts"></delProducts>
     </div>
   </div>
 </template>
