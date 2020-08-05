@@ -1,6 +1,21 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+// bootstrap檔案
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+// vue-loading-overlay
+import Loading from 'vue-loading-overlay' // component
+import 'vue-loading-overlay/dist/vue-loading.css' // style
+Vue.use(Loading) // Use default options
+Vue.component('Loading', Loading)
+Vue.use(VueAxios, axios)
+// 使用 bootstrap
+Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
 
