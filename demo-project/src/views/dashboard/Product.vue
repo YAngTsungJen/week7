@@ -36,23 +36,10 @@
                   <div class="btn-group">
                     <button
                       type="button"
-                      class="btn btn-outline-primary btn-sm"
-                      @click="openModal('edit', item)"
-                      :disabled="loadingbtn === item.id"
-                    >
-                      加入
-                      <span
-                        class="spinner-grow spinner-grow-sm"
-                        role="status"
-                        aria-hidden="true"
-                        v-if="loadingbtn === item.id"
-                      ></span>
+                      class="btn btn-outline-primary btn-sm">加入
+                      <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                     </button>
-                    <button
-                      type="button"
-                      class="btn btn-outline-danger btn-sm"
-                      @click="openModal('delete',item)"
-                    >取消</button>
+                    <button type="button" class="btn btn-outline-danger btn-sm">取消</button>
                   </div>
                 </td>
               </tr>
@@ -63,16 +50,12 @@
       <!-- 分頁元件 -->
       <pagination class="justify-content-center" :pages="pagination" @update="getProducts"></pagination>
       <!-- 刪除元件 -->
-      <delProducts :temp-product="tempProduct" @delete="getProducts"></delProducts>
     </div>
   </div>
 </template>
 
 <script>
 import Pagination from '../../components/Pagination'
-import DelProducts from '../../components/backend/DelProducts'
-
-import $ from 'jquery'
 export default {
   data () {
     return {
@@ -88,8 +71,7 @@ export default {
     }
   },
   components: {
-    Pagination,
-    DelProducts
+    Pagination
   },
   methods: {
     getProducts (num = 1) {
@@ -98,49 +80,13 @@ export default {
       this.$http
         .get(url)
         .then((res) => {
-          console.log(res)
           this.isLoading = false
           this.products = res.data.data
           this.pagination = res.data.meta.pagination
-          if (this.tempProduct.id || this.isNew) {
-            $('#productModal').modal('hide')
-            $('#delProductModal').modal('hide')
-            this.tempProduct = { imageUrl: [] }
-          }
         })
         .catch((error) => {
           console.log(error)
         })
-    },
-    openModal (isNew, item) {
-      //  判斷openModal
-      switch (isNew) {
-        case 'new': {
-          //  若為new
-          this.tempProduct = { imageUrl: [] }
-          this.isNew = true
-          $('#productModal').modal('show')
-          break
-        }
-        case 'edit': {
-          this.isNew = false
-          this.loadingbtn = item.id
-          const url = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/product/${item.id}` //  取得單一筆資料
-          this.$http.get(url).then((res) => {
-            console.log(res)
-            this.tempProduct = res.data.data
-            $('#productModal').modal('show')
-            this.loadingbtn = '' //  清除
-          })
-          break
-        }
-        case 'delete':
-          $('#delProductModal').modal('show')
-          this.tempProduct = Object.assign({}, item) //  淺層複製
-          break
-        default:
-          break
-      }
     }
   },
   created () {
