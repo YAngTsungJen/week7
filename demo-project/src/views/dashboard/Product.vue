@@ -3,7 +3,7 @@
     <loading :active.sync="isLoading"></loading>
     <div class="container">
       <div class="text-right">
-        <button type="button" class="btn btn-primary">新增房間</button>
+        <button type="button" class="btn btn-primary" @click="openmodal('new')">新增房間</button>
       </div>
       <div class="row">
         <div class="table-responsive col-8">
@@ -36,10 +36,12 @@
                   <div class="btn-group">
                     <button
                       type="button"
-                      class="btn btn-outline-primary btn-sm">加入
+                      class="btn btn-outline-primary btn-sm" @click.prevent="openmodal('edit',item)"
+                      >加入
                       <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-outline-danger btn-sm">取消</button>
+                    <button type="button" class="btn btn-outline-danger btn-sm" @click.prevent="openmodal('del',item)"
+                    >取消</button>
                   </div>
                 </td>
               </tr>
@@ -49,13 +51,19 @@
       </div>
       <!-- 分頁元件 -->
       <pagination class="justify-content-center" :pages="pagination" @update="getProducts"></pagination>
+      <!-- 新增和編輯 -->
+      <Productmodal ref="productModal" :isNew = 'isNew' @update = "getProducts" />
       <!-- 刪除元件 -->
+      <DelProducts ref="delProductModal" :temp-product = 'tempProduct' @update = "getProducts" />
     </div>
   </div>
 </template>
 
 <script>
+import $ from 'jquery'
 import Pagination from '../../components/Pagination'
+import Productmodal from '../../components/backend/Productmodal'
+import DelProducts from '../../components/backend/DelProducts'
 export default {
   data () {
     return {
@@ -71,15 +79,16 @@ export default {
     }
   },
   components: {
-    Pagination
+    Pagination,
+    Productmodal,
+    DelProducts
   },
   methods: {
     getProducts (num = 1) {
       const url = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/products?page=${num}`
       this.isLoading = true
       this.$http
-        .get(url)
-        .then((res) => {
+        .get(url).then((res) => {
           this.isLoading = false
           this.products = res.data.data
           this.pagination = res.data.meta.pagination
@@ -87,6 +96,21 @@ export default {
         .catch((error) => {
           console.log(error)
         })
+    }
+  },
+  openmodal (type, item) {
+    if (type === 'new') {
+      this.$refs.Productmodal.tempProduct = {
+        imgUrl: []
+      }
+      $('#productModal').modal('show')
+      this.isNew = true
+    } else if (type === 'edit') {
+      this.$refs.Productmodal.getProduct(item.num)
+      this.isNew = false
+    } else if (type === 'del') {
+      this.tempProduct = { ...item } // 不太懂
+      $('#delProductModal').modal('show')
     }
   },
   created () {

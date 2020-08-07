@@ -5,6 +5,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 // bootstrap檔案
 import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 // vue-loading-overlay
 import Loading from 'vue-loading-overlay' // component
 import 'vue-loading-overlay/dist/vue-loading.css' // style
