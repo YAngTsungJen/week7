@@ -96,21 +96,21 @@ export default {
         .catch((error) => {
           console.log(error)
         })
-    }
-  },
-  openmodal (type, item) {
-    if (type === 'new') {
-      this.$refs.Productmodal.tempProduct = {
-        imgUrl: []
+    },
+    openmodal (type, item) {
+      if (type === 'new') {
+        this.$refs.Productmodal.tempProduct = {
+          imgUrl: []
+        }
+        $('#productModal').modal('show')
+        this.isNew = true
+      } else if (type === 'edit') {
+        this.$refs.Productmodal.getProduct(item.num)
+        this.isNew = false
+      } else if (type === 'del') {
+        this.tempProduct = { ...item } // 不太懂
+        $('#delProductModal').modal('show')
       }
-      $('#productModal').modal('show')
-      this.isNew = true
-    } else if (type === 'edit') {
-      this.$refs.Productmodal.getProduct(item.num)
-      this.isNew = false
-    } else if (type === 'del') {
-      this.tempProduct = { ...item } // 不太懂
-      $('#delProductModal').modal('show')
     }
   },
   created () {
