@@ -2,11 +2,11 @@
   <div>
     <loading :active.sync="isLoading"></loading>
     <div class="container">
-      <div class="text-right">
+      <div class="text-right mt-4" width="200px">
         <button type="button" class="btn btn-primary" @click="openmodal('new')">新增房間</button>
       </div>
       <div class="row">
-        <div class="table-responsive col-8">
+        <div class="table-responsive">
           <table class="table table-striped table-dark">
             <thead>
               <tr>
@@ -38,7 +38,6 @@
                       type="button"
                       class="btn btn-outline-primary btn-sm" @click.prevent="openmodal('edit',item)"
                       >加入
-                      <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-outline-danger btn-sm" @click.prevent="openmodal('del',item)"
                     >取消</button>
@@ -89,6 +88,7 @@ export default {
       this.isLoading = true
       this.$http
         .get(url).then((res) => {
+          console.log(res)
           this.isLoading = false
           this.products = res.data.data
           this.pagination = res.data.meta.pagination
@@ -99,13 +99,13 @@ export default {
     },
     openmodal (type, item) {
       if (type === 'new') {
-        this.$refs.Productmodal.tempProduct = {
+        this.$refs.productModal.tempProduct = {
           imgUrl: []
         }
         $('#productModal').modal('show')
         this.isNew = true
       } else if (type === 'edit') {
-        this.$refs.Productmodal.getProduct(item.num)
+        this.$refs.productModal.getProduct(item.id)
         this.isNew = false
       } else if (type === 'del') {
         this.tempProduct = { ...item } // 不太懂

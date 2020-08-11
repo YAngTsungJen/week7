@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h2>這是管理頁面</h2>
     <div id="nav">
-      <router-link to="/admin">後台首頁</router-link> |
-      <router-link to="/admin/product">新案列表</router-link> |
+      <router-link to="/admin/products">後台首頁</router-link> |
+      <router-link to="/admin/product">新房子列表</router-link> |
       <router-link to="/admin/coupons">優惠活動</router-link> |
+      <router-link to="/admin/order">預購列表</router-link> |
       <router-link to="/">回到前台</router-link>
     </div>
     <router-view :token="token" v-if="checkSuccess" />

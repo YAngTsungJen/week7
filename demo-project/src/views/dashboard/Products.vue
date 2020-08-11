@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h2>管理後台的產品頁面</h2>
+    <h2>進入後台</h2>
+    <div>
+      <img class="img-fluid rounded" width="100%" height="500px" src="https://images.pexels.com/photos/101808/pexels-photo-101808.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">
+    </div>
   </div>
 </template>
 
