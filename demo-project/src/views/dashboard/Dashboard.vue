@@ -5,6 +5,7 @@
       <router-link to="/admin/product">新房子列表</router-link> |
       <router-link to="/admin/coupons">優惠活動</router-link> |
       <router-link to="/admin/order">預購列表</router-link> |
+      <router-link to="/admin/storages">圖片列表</router-link> |
       <router-link to="/">回到前台</router-link>
     </div>
     <router-view :token="token" v-if="checkSuccess" />

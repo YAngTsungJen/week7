@@ -31,7 +31,7 @@
                   </tr>
                   <tr>
                     <th scope="row">留言</th>
-                    <td>{{order.user.message}}</td>
+                    <td>{{order.message}}</td>
                   </tr>
                 </tbody>
               </table>

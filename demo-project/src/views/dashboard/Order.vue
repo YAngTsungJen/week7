@@ -13,26 +13,20 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in order" :key="item.id" >
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+              <tr v-for="(item,id) in orders" :key="id" >
+                <th scope="row"> {{ i+1 }} </th>
+                <td scope="row"> {{ item.created.datetime }} </td>
+                <td scope="row"> {{ }} </td>
+                <td scope="row">@mdo</td>
               </tr>
               <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
+                <th scope="row"></th>
                 <td>Larry</td>
                 <td>the Bird</td>
                 <td>@twitter</td>
                 <td>
               <button class="btn btn-outline-primary btn-sm mr-1"
-                      @click.prevent="openModal(item)">
+                @click.prevent = "openModal(item) " >
                 查看
               </button>
             </td>
@@ -71,6 +65,7 @@ export default {
     getOrders (page = 1) {
       const url = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/orders?page=${page}`
       this.$http.get(url).then((res) => {
+        console.log(res)
         this.orders = res.data.data
         this.pagination = res.data.meta.pagination
       })

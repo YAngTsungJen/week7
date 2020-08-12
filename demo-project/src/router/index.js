@@ -47,6 +47,10 @@ const routes = [
     component: () => import('../views/dashboard/Dashboard.vue'),
     children: [
       {
+        path: 'storages',
+        component: () => import('../views/dashboard/Storages.vue')
+      },
+      {
         path: 'products',
         component: () => import('../views/dashboard/Products.vue')
       },
