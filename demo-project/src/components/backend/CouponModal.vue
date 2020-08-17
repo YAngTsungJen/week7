@@ -16,19 +16,23 @@
             <div class="modal-body">
               <div class="form-group">
                 <label for="title">標題</label>
-                <input type="text" class="form-control" id="title" v-modal="tempCoupon.title" placeholder="請輸入標題">
+                <input type="text" class="form-control" id="title" v-model="tempCoupon.title" placeholder="請輸入標題">
               </div>
               <div class="form-group">
                 <label for="code">折扣碼</label>
-                <input type="text" class="form-control" id="code" v-modal="tempCoupon.code" placeholder="請輸入折扣碼">
+                <input type="text" class="form-control" id="code" v-model="tempCoupon.code" placeholder="請輸入折扣碼">
               </div>
               <div class="form-group">
-                <label for="precent">折扣百分比</label>
-                <input type="text" class="form-control" id="precent" v-modal="tempCoupon.precent" placeholder="請輸入折扣百分比">
+                <label for="percent">折扣百分比</label>
+                <input type="text" class="form-control" id="percent" v-model="tempCoupon.percent" placeholder="請輸入折扣百分比">
               </div>
               <div class="form-group">
-                <label for="deadline_at">到期日</label>
-                <input type="text" class="form-control" id="deadline_at" v-modal="tempCoupon.deadline_at" placeholder="請輸入到期日">
+                <label for="due_date">到期日</label>
+                <input type="date" class="form-control" id="due_date" v-model="due_date" placeholder="請輸入到期日">
+              </div>
+              <div class="form-group">
+                <label for="due_time">到期時間</label>
+                <input type="time" class="form-control" id="due_time" step="1" v-model="due_time" placeholder="請輸入到期時間">
               </div>
               <div class="form-group">
                 <div class="form-check">
@@ -64,9 +68,9 @@ export default {
       tempCoupon: {
         title: '',
         code: '',
-        precent: 100,
+        percent: 100,
         enabled: false,
-        deadline_at: ''
+        deadline_at: 0
       },
       due_date: '',
       due_time: ''
@@ -85,8 +89,8 @@ export default {
         console.log(res)
         this.tempCoupon = res.data.data
         $('#couponModal').modal('show')
-        const kt = this.tempCoupon.deadline.datetime.split(' ');
-        [this.due_date, this.due_time] = kt
+        const dedlineAt = this.tempCoupon.deadline.datetime.split(' ');
+        [this.due_date, this.due_time] = dedlineAt
       })
         .catch((error) => {
           console.log(error)
@@ -100,6 +104,7 @@ export default {
         http = 'patch'
       }
       this.tempCoupon.deadline_at = `${this.due_date} ${this.due_time}`
+      console.log(this.tempCoupon.deadline_at)
       this.$http[http](url, this.tempCoupon).then((res) => {
         $('#couponModal').modal('hide')
         this.$emit('update')

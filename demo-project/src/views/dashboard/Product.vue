@@ -108,7 +108,7 @@ export default {
         this.$refs.productModal.getProduct(item.id)
         this.isNew = false
       } else if (type === 'del') {
-        this.tempProduct = { ...item } // 不太懂
+        this.tempProduct = { ...item }
         $('#delProductModal').modal('show')
       }
     }

@@ -19,7 +19,7 @@
             <tr v-for="item in coupons" :key="item.id">
               <td> {{ item.title }} </td>
               <td> {{ item.code }} </td>
-              <td> {{ item.precent }} % </td>
+              <td> {{ item.percent }} % </td>
               <td> {{ item.deadline_at }} </td>
               <td class="text-center">
                 <strong class="text-success" v-if="item.enabled">啟用</strong>
@@ -27,13 +27,14 @@
               </td>
               <td>
                 <button class="btn btn-primary btn-sm" @click.prevent="openModal('edit',item)" >編輯</button>
-                <button class="btn btn-primary btn-sm" >刪除</button>
+                <button class="btn btn-danger btn-sm" @click.prevent="openModal('del',item)">刪除</button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
       <CouponModal ref="couponModal" :is-new="isNew" @update ="getCoupons" />
+      <DelCouponModal :temp-coupons="tempCoupons" @update ="getCoupons" />
         <h2>這是後台優惠券</h2>
     </div>
 </template>
@@ -41,6 +42,7 @@
 <script>
 import $ from 'jquery'
 import CouponModal from '../../components/backend/CouponModal'
+import DelCouponModal from '../../components/backend/DelCouponModal'
 export default {
   data () {
     return {
@@ -48,7 +50,7 @@ export default {
       tempCoupons: {
         title: '',
         code: '',
-        precent: 100,
+        percent: 100,
         enabled: false,
         deadline_at: ''
       },
@@ -56,7 +58,8 @@ export default {
     }
   },
   components: {
-    CouponModal
+    CouponModal,
+    DelCouponModal
   },
   methods: {
     getCoupons (page = 1) {
@@ -75,6 +78,9 @@ export default {
       } else if (type === 'edit') {
         this.$refs.couponModal.getCoupon(item.id)
         this.isNew = false
+      } else if (type === 'del') {
+        this.tempCoupons = { ...item }
+        $('#delCouponModal').modal('show')
       }
     }
   },
