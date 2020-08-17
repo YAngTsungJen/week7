@@ -38,7 +38,7 @@ export default {
   methods: {
     delCoupon () {
       const url = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/coupon/${this.tempCoupons.id}`
-      this.$http.delete(url).then(() => {
+      this.$http.delete(url, this.tempCoupons.id).then(() => {
         ('#delCouponModal').modal('hide')
         this.$emit('update')
       })

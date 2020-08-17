@@ -79,8 +79,8 @@ export default {
         this.$refs.couponModal.getCoupon(item.id)
         this.isNew = false
       } else if (type === 'del') {
-        this.tempCoupons = { ...item }
         $('#delCouponModal').modal('show')
+        this.tempCoupons = { ...item }
       }
     }
   },
