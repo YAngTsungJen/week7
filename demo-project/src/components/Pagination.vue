@@ -13,8 +13,8 @@
         >
           <a class="page-link" href="#" @click.prevent="updatePage(item)">{{item}}</a>
         </li>
-        <li class="page-item">
-          <a class="page-link" href="#">Next</a>
+        <li class="page-item" :class="{'disabled': pages.current_page === pages.total_pages }">
+          <a class="page-link" href="#" @click.prevent="updatePage(pages.current_page + 1)">Next</a>
         </li>
       </ul>
     </nav>
@@ -26,7 +26,7 @@ export default {
   props: ['pages'],
   methods: {
     updatePage (num) {
-      this.$emit('update')
+      this.$emit('update', num)
     }
   }
 }
